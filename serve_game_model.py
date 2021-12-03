@@ -18,7 +18,7 @@ def createDetailedPredictions(preds):
         next_x = preds_with_pos[i][1] // 5
         next_y = preds_with_pos[i][1] % 5
         # print("Next Move: ", f'({next_x} , {next_y})', " | Probability: ", preds_with_pos[i][0])
-        probs.append([(next_x, next_y), str(preds_with_pos[i][0])])
+        probs.append({str(preds_with_pos[i][0]) : str(next_x) + str(next_y)})
     # print("\n", "="*30, "\n")
     return probs
 
@@ -41,7 +41,7 @@ def index():
     next_y = pred_pos % 5
     
     response = {}
-    response["nextMove"] = f'( {next_x} , {next_y} )'
+    # response["nextMove"] = f'( {next_x} , {next_y} )'
 
 
     probs = None
