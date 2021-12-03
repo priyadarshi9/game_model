@@ -26,8 +26,9 @@ model = tf.keras.models.load_model('./player_1_moves_model.h5')
 
 @app.route('/predict', methods=["POST"])
 def index():
-    inp = request.form.get("state")
-    getDetailed = request.form.get("getDetailed")
+    data = dict(request.get_json())
+    inp = data.get("state")
+    getDetailed = data.get("getDetailed")
 
     inp = inp.split(",")
     int_input = np.array([int(i) for i in inp])
@@ -44,7 +45,7 @@ def index():
 
 
     probs = None
-    if getDetailed == 'true':
+    if getDetailed:
         probs = createDetailedPredictions(preds)
 
     response['detailedProbs'] = probs
