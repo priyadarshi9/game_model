@@ -13,12 +13,12 @@ def createDetailedPredictions(preds):
     preds_with_pos = [(preds[i], i) for i in range(25)]
     preds_with_pos.sort(reverse=True)
 
-    probs = []
+    probs = {}
     for i in range(25):
         next_x = preds_with_pos[i][1] // 5
         next_y = preds_with_pos[i][1] % 5
         # print("Next Move: ", f'({next_x} , {next_y})', " | Probability: ", preds_with_pos[i][0])
-        probs.append({str(preds_with_pos[i][0]) : str(next_x) + str(next_y)})
+        probs[str(preds_with_pos[i][0])] = str(next_x) + str(next_y)
     # print("\n", "="*30, "\n")
     return probs
 
@@ -39,18 +39,12 @@ def index():
 
     next_x = pred_pos//5
     next_y = pred_pos % 5
-    
-    response = {}
-    # response["nextMove"] = f'( {next_x} , {next_y} )'
-
 
     probs = None
     if getDetailed:
         probs = createDetailedPredictions(preds)
 
-    response['detailedProbs'] = probs
-
-    return jsonify(response)
+    return jsonify(probs)
 
 if __name__ == '__main__':
     app.run(debug=True)
